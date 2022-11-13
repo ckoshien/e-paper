@@ -19,8 +19,8 @@ try:
     epd.init()
     epd.Clear()
     
-    jaFont24 = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
-    enFont40 = ImageFont.truetype('font/BebasNeue-Regular.ttf', 40)
+    jaFont = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 48)
+    enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 80)
     api_url = 'https://jcbl-score.com/scoresheet/api/v1/game'
     response = requests.get(api_url)
     games = json.loads(response.text)
@@ -32,11 +32,11 @@ try:
             # 255: clear the frame
             Himage = Image.new('1', (epd.width, epd.height), 255)
             draw = ImageDraw.Draw(Himage)
-            draw.text((10, 0), game['name'], font = jaFont24, fill = 0)
-            draw.text((10, 40), game['first_team_name'], font = jaFont24, fill = 0)
-            draw.text((240, 40), game['last_team_name'], font = jaFont24, fill = 0)
-            draw.text((10, 40), str(game['first_run']), font = enFont40, fill = 0)
-            draw.text((240, 40), str(game['last_run']), font = enFont40, fill = 0)
+            draw.text((10, 0), game['name'], font = jaFont, fill = 0)
+            draw.text((100, 60), game['first_team_name'], font = jaFont, fill = 0)
+            draw.text((480, 60), game['last_team_name'], font = jaFont, fill = 0)
+            draw.text((100, 80), str(game['first_run']), font = enFont, fill = 0)
+            draw.text((480, 80), str(game['last_run']), font = enFont, fill = 0)
             epd.display(epd.getbuffer(Himage))
             time.sleep(5)    
     
