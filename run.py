@@ -39,17 +39,18 @@ try:
             draw.text((firstPosition, 60), game['first_team_name'], font = jaFontSmall, fill = 0)
             draw.text((lastPosition, 60), game['last_team_name'], font = jaFontSmall, fill = 0)
             draw.text((640/3, 120), str(game['first_run']), font = enFont, fill = 0)
-            draw.text((640/2 + 55, 120), '-', font = enFont, fill = 0)
+            draw.text((640/2, 120), '-', font = enFont, fill = 0)
             draw.text((640*3/4, 120), str(game['last_run']), font = enFont, fill = 0)
             if game['winner']:
                 draw.text((firstPosition, 300), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
-                draw.chord((200, 300, 250, 100), 0, 360, fill = 0)
             if game['saver']:
                 draw.text((lastPosition, 300), 'S:' + game['saver'], font = jaFontSmall, fill = 0)
             if game['loser']:
                 draw.text((firstPosition, 350), '敗:' + game['loser'], font = jaFontSmall, fill = 0)
             if game['holder']:
-                draw.text((lastPosition, 400), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
+                draw.text((lastPosition, 350), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
+            if game['homer']:
+                draw.text((firstPosition, 400), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
             epd.display(epd.getbuffer(Himage))
             time.sleep(5)  
     
