@@ -31,16 +31,16 @@ try:
         if tdatetime + timedelta(days=2) > dt.now():
             print(game)
             # 255: clear the frame
-            firstPosition = 640/3 - (len(game['first_team_name'])/2 - 1)*24
-            lastPosition = 640*3/4 - (len(game['last_team_name'])/2 - 1)*24
+            firstPosition = 640/5 - (len(game['first_team_name'])/2 - 1)*24
+            lastPosition = 640*4/5 - (len(game['last_team_name'])/2 - 1)*24
             Himage = Image.new('1', (epd.width, epd.height), 255)
             draw = ImageDraw.Draw(Himage)
             draw.text((10, 0), game['name'], font = jaFontSmall, fill = 0)
             draw.text((firstPosition, 60), game['first_team_name'], font = jaFontSmall, fill = 0)
             draw.text((lastPosition, 60), game['last_team_name'], font = jaFontSmall, fill = 0)
-            draw.text((640/3, 120), str(game['first_run']), font = enFont, fill = 0)
+            draw.text((640/5, 120), str(game['first_run']), font = enFont, fill = 0)
             draw.text((640/2, 120), '-', font = enFont, fill = 0)
-            draw.text((640*3/4, 120), str(game['last_run']), font = enFont, fill = 0)
+            draw.text((640*4/5, 120), str(game['last_run']), font = enFont, fill = 0)
             if game['winner']:
                 draw.text((firstPosition, 300), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
             if game['saver']:
