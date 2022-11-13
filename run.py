@@ -34,7 +34,10 @@ try:
             draw = ImageDraw.Draw(Himage)
             draw.text((10, 0), game['name'], font = font24, fill = 0)
             draw.text((10, 30), game['first_team_name'], font = font24, fill = 0)
-            draw.text((150, 30), game['last_team_name'], font = font24, fill = 0)     
+            draw.text((150, 30), game['last_team_name'], font = font24, fill = 0)
+            epd.display(epd.getbuffer(Himage))
+            time.sleep(5)    
+    
     draw.line((20, 50, 70, 100), fill = 0)
     draw.line((70, 50, 20, 100), fill = 0)
     draw.rectangle((20, 50, 70, 100), outline = 0)
