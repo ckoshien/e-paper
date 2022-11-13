@@ -7,7 +7,7 @@ import time
 from PIL import Image,ImageDraw,ImageFont
 import requests
 import json
-import datetime
+from datetime import datetime as dt, timedelta
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -25,8 +25,8 @@ try:
     response = requests.get(api_url)
     games = json.loads(response.text)
     for game in games:
-        tdatetime = datetime.datetime.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
-        if tdatetime.timedelta(min=15) > datetime.datetime.now():
+        tdatetime = dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
+        if tdatetime + timedelta(minute=15) > dt.now():
             print(game)
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
