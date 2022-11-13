@@ -19,8 +19,8 @@ try:
     epd.init()
     epd.Clear()
     
-    font24 = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
-    font18 = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 18)
+    jaFont24 = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
+    enFont40 = ImageFont.truetype('font/BebasNeue-Regular.ttf', 40)
     api_url = 'https://jcbl-score.com/scoresheet/api/v1/game'
     response = requests.get(api_url)
     games = json.loads(response.text)
@@ -32,9 +32,11 @@ try:
             # 255: clear the frame
             Himage = Image.new('1', (epd.width, epd.height), 255)
             draw = ImageDraw.Draw(Himage)
-            draw.text((10, 0), game['name'], font = font24, fill = 0)
-            draw.text((10, 30), game['first_team_name'], font = font24, fill = 0)
-            draw.text((150, 30), game['last_team_name'], font = font24, fill = 0)
+            draw.text((10, 0), game['name'], font = jaFont24, fill = 0)
+            draw.text((10, 40), game['first_team_name'], font = jaFont24, fill = 0)
+            draw.text((240, 40), game['last_team_name'], font = jaFont24, fill = 0)
+            draw.text((10, 40), game['first_run'], font = enFont40, fill = 0)
+            draw.text((240, 40), game['last_run'], font = enFont40, fill = 0)
             epd.display(epd.getbuffer(Himage))
             time.sleep(5)    
     
@@ -53,9 +55,6 @@ try:
     logging.info("2.Drawing on the Vertical image...")
     Limage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Limage)
-    draw.text((2, 0), 'hello world', font = font18, fill = 0)
-    draw.text((2, 20), '7.5inch epd', font = font18, fill = 0)
-    draw.text((20, 50), u'微雪电子', font = font18, fill = 0)
     draw.line((10, 90, 60, 140), fill = 0)
     draw.line((60, 90, 10, 140), fill = 0)
     draw.rectangle((10, 90, 60, 140), outline = 0)
