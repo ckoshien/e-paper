@@ -32,8 +32,8 @@ import logging
 from . import epdconfig
 
 # Display resolution
-EPD_WIDTH       = 640
-EPD_HEIGHT      = 384
+EPD_WIDTH       = 800
+EPD_HEIGHT      = 480
 
 logger = logging.getLogger(__name__)
 
@@ -46,14 +46,68 @@ class EPD:
         self.width = EPD_WIDTH
         self.height = EPD_HEIGHT
     
+    Voltage_Frame_7IN5_V2 = [
+	0x6, 0x3F, 0x3F, 0x11, 0x24, 0x7, 0x17,
+    ]
+
+    LUT_VCOM_7IN5_V2 = [	
+        0x0,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x0,	0xF,	0x1,	0xF,	0x1,	0x2,	
+        0x0,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+    ]	
+
+    LUT_WW_7IN5_V2 = [
+        0x10,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x84,	0xF,	0x1,	0xF,	0x1,	0x2,	
+        0x20,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+    ]
+
+    LUT_BW_7IN5_V2 = [	
+        0x10,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x84,	0xF,	0x1,	0xF,	0x1,	0x2,	
+        0x20,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+    ]
+
+    LUT_WB_7IN5_V2 = [
+        0x80,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x84,	0xF,	0x1,	0xF,	0x1,	0x2,	
+        0x40,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+    ]
+
+    LUT_BB_7IN5_V2 = [
+        0x80,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x84,	0xF,	0x1,	0xF,	0x1,	0x2,	
+        0x40,	0xF,	0xF,	0x0,	0x0,	0x1,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+        0x0,	0x0,	0x0,	0x0,	0x0,	0x0,	
+    ]
+
     # Hardware reset
     def reset(self):
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200) 
+        epdconfig.delay_ms(20) 
         epdconfig.digital_write(self.reset_pin, 0)
-        epdconfig.delay_ms(5)
+        epdconfig.delay_ms(2)
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200)   
+        epdconfig.delay_ms(20)   
 
     def send_command(self, command):
         epdconfig.digital_write(self.dc_pin, 0)
@@ -66,110 +120,150 @@ class EPD:
         epdconfig.digital_write(self.cs_pin, 0)
         epdconfig.spi_writebyte([data])
         epdconfig.digital_write(self.cs_pin, 1)
-        
+
     def send_data2(self, data):
         epdconfig.digital_write(self.dc_pin, 1)
         epdconfig.digital_write(self.cs_pin, 0)
         epdconfig.spi_writebyte2(data)
         epdconfig.digital_write(self.cs_pin, 1)
-        
+
     def ReadBusy(self):
         logger.debug("e-Paper busy")
-        while(epdconfig.digital_read(self.busy_pin) == 0):      # 0: idle, 1: busy
-            epdconfig.delay_ms(100)    
+        self.send_command(0x71)
+        busy = epdconfig.digital_read(self.busy_pin)
+        while(busy == 0):
+            self.send_command(0x71)
+            busy = epdconfig.digital_read(self.busy_pin)
+        epdconfig.delay_ms(20)
         logger.debug("e-Paper busy release")
         
+    def SetLut(self, lut_vcom, lut_ww, lut_bw, lut_wb, lut_bb):
+        self.send_command(0x20)
+        for count in range(0, 42):
+            self.send_data(lut_vcom[count])
+
+        self.send_command(0x21)
+        for count in range(0, 42):
+            self.send_data(lut_ww[count])
+
+        self.send_command(0x22)
+        for count in range(0, 42):
+            self.send_data(lut_bw[count])
+
+        self.send_command(0x23)
+        for count in range(0, 42):
+            self.send_data(lut_wb[count])
+
+        self.send_command(0x24)
+        for count in range(0, 42):
+            self.send_data(lut_bb[count])
+
     def init(self):
         if (epdconfig.module_init() != 0):
             return -1
         # EPD hardware init start
         self.reset()
         
-        self.send_command(0x01) # POWER_SETTING
-        self.send_data2([0x37, 0x00])
+        # self.send_command(0x06)     # btst
+        # self.send_data(0x17)
+        # self.send_data(0x17)
+        # self.send_data(0x28)        # If an exception is displayed, try using 0x38
+        # self.send_data(0x17)
         
-        self.send_command(0x00) # PANEL_SETTING
-        self.send_data2([0xCF, 0x08])
+        # self.send_command(0x01)			#POWER SETTING
+        # self.send_data(0x07)
+        # self.send_data(0x07)    #VGH=20V,VGL=-20V
+        # self.send_data(0x3f)		#VDH=15V
+        # self.send_data(0x3f)		#VDL=-15V
+
+        self.send_command(0x01);  # power setting
+        self.send_data(0x17);  # 1-0=11: internal power
+        self.send_data(self.Voltage_Frame_7IN5_V2[6]);  # VGH&VGL
+        self.send_data(self.Voltage_Frame_7IN5_V2[1]);  # VSH
+        self.send_data(self.Voltage_Frame_7IN5_V2[2]);  #  VSL
+        self.send_data(self.Voltage_Frame_7IN5_V2[3]);  #  VSHR
         
-        self.send_command(0x06) # BOOSTER_SOFT_START
-        self.send_data2([0xc7, 0xcc, 0x28])
+        self.send_command(0x82); # VCOM DC Setting
+        self.send_data(self.Voltage_Frame_7IN5_V2[4]);  # VCOM
+
+        self.send_command(0x06);  # Booster Setting
+        self.send_data(0x27);
+        self.send_data(0x27);
+        self.send_data(0x2F);
+        self.send_data(0x17);
         
-        self.send_command(0x04) # POWER_ON
+        self.send_command(0x30);   # OSC Setting
+        self.send_data(self.Voltage_Frame_7IN5_V2[0]);  # 2-0=100: N=4  ; 5-3=111: M=7  ;  3C=50Hz     3A=100HZ
+
+        self.send_command(0x04) #POWER ON
+        epdconfig.delay_ms(100)
         self.ReadBusy()
-        
-        self.send_command(0x30) # PLL_CONTROL
-        self.send_data(0x3c)
-        
-        self.send_command(0x41) # TEMPERATURE_CALIBRATION
+
+        self.send_command(0X00)			#PANNEL SETTING
+        self.send_data(0x3F)   #KW-3f   KWR-2F	BWROTP 0f	BWOTP 1f
+
+        self.send_command(0x61)        	#tres
+        self.send_data(0x03)		#source 800
+        self.send_data(0x20)
+        self.send_data(0x01)		#gate 480
+        self.send_data(0xE0)
+
+        self.send_command(0X15)
         self.send_data(0x00)
-        
-        self.send_command(0x50) # VCOM_AND_DATA_INTERVAL_SETTING
-        self.send_data(0x77)
-        
-        self.send_command(0x60) # TCON_SETTING
+
+        self.send_command(0X50)			#VCOM AND DATA INTERVAL SETTING
+        self.send_data(0x10)
+        self.send_data(0x07)
+
+        self.send_command(0X60)			#TCON SETTING
         self.send_data(0x22)
-        
-        self.send_command(0x61) # TCON_RESOLUTION
-        self.send_data(EPD_WIDTH >> 8)     #source 640
-        self.send_data(EPD_WIDTH & 0xff)
-        self.send_data(EPD_HEIGHT >> 8)     #gate 384
-        self.send_data(EPD_HEIGHT & 0xff)
-        
-        self.send_command(0x82) # VCM_DC_SETTING
-        self.send_data(0x1E) # decide by LUT file
-        
-        self.send_command(0xe5) # FLASH MODE
-        self.send_data(0x03)
-        
+
+        self.send_command(0x65);  # Resolution setting
+        self.send_data(0x00);
+        self.send_data(0x00); # 800*480
+        self.send_data(0x00);
+        self.send_data(0x00);
+
+        self.SetLut(self.LUT_VCOM_7IN5_V2, self.LUT_WW_7IN5_V2, self.LUT_BW_7IN5_V2, self.LUT_WB_7IN5_V2, self.LUT_BB_7IN5_V2)
         # EPD hardware init end
         return 0
 
     def getbuffer(self, image):
         img = image
         imwidth, imheight = img.size
-        halfwidth = int(self.width / 2)
-        buf = [0x33] * halfwidth * self.height
-        
         if(imwidth == self.width and imheight == self.height):
             img = img.convert('1')
         elif(imwidth == self.height and imheight == self.width):
+            # image has correct dimensions, but needs to be rotated
             img = img.rotate(90, expand=True).convert('1')
-            imwidth, imheight = img.size
         else:
             logger.warning("Wrong image dimensions: must be " + str(self.width) + "x" + str(self.height))
             # return a blank buffer
-            return buf
-        
-        pixels = img.load()
+            return [0x00] * (int(self.width/8) * self.height)
 
-        for y in range(imheight):
-            offset = y * halfwidth
-            for x in range(1, imwidth, 2):
-                i = offset + x // 2
-                if(pixels[x-1, y] > 191):
-                    if(pixels[x, y] > 191):
-                        buf[i] = 0x33
-                    else:
-                        buf[i] = 0x30
-                else:
-                    if(pixels[x, y] > 191):
-                        buf[i] = 0x03
-                    else:
-                        buf[i] = 0x00
+        buf = bytearray(img.tobytes('raw'))
+        # The bytes need to be inverted, because in the PIL world 0=black and 1=white, but
+        # in the e-paper world 0=white and 1=black.
+        for i in range(len(buf)):
+            buf[i] ^= 0xFF
         return buf
-        
+
     def display(self, image):
-        self.send_command(0x10)
+        self.send_command(0x13)
         self.send_data2(image)
+
         self.send_command(0x12)
         epdconfig.delay_ms(100)
         self.ReadBusy()
-        
+
     def Clear(self):
-        buf = [0x33] * int(self.width * self.height / 2)
+        buf = [0x00] * (int(self.width/8) * self.height)
         self.send_command(0x10)
         self.send_data2(buf)
+        self.send_command(0x13)
+        self.send_data2(buf)
         self.send_command(0x12)
+        epdconfig.delay_ms(100)
         self.ReadBusy()
 
     def sleep(self):
