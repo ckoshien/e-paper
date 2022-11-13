@@ -5,6 +5,8 @@ import logging
 from lib.waveshare_epd import epd7in5
 import time
 from PIL import Image,ImageDraw,ImageFont
+import requests
+import json
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -18,13 +20,20 @@ try:
     
     font24 = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
     font18 = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 18)
+    api_url = 'https://jcbl-score.com/scoresheet/api/v1/game'
+    response = requests.get(api_url)
+    games = json.loads(response.text)
+    print(games)
+
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
-    Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+    # 255: clear the frame
+    Himage = Image.new('1', (epd.width, epd.height), 255)
     draw = ImageDraw.Draw(Himage)
+    
     draw.text((10, 0), 'hello world', font = font24, fill = 0)
     draw.text((10, 20), '7.5inch e-Paper', font = font24, fill = 0)
-    draw.text((150, 0), u'微雪电子', font = font24, fill = 0)    
+    draw.text((150, 0), u'キャップ野球情報局', font = font24, fill = 0)    
     draw.line((20, 50, 70, 100), fill = 0)
     draw.line((70, 50, 20, 100), fill = 0)
     draw.rectangle((20, 50, 70, 100), outline = 0)
