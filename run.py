@@ -7,6 +7,7 @@ import time
 from PIL import Image,ImageDraw,ImageFont
 import requests
 import json
+import datetime
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -23,8 +24,10 @@ try:
     api_url = 'https://jcbl-score.com/scoresheet/api/v1/game'
     response = requests.get(api_url)
     games = json.loads(response.text)
-    print(games)
-
+    for game in games:
+        tdatetime = datetime.datetime.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
+        if tdatetime.__add__(15) > datetime.datetime.now():
+            print(game)
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
     # 255: clear the frame
