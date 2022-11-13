@@ -43,7 +43,7 @@ try:
             draw.text((640*3/4, 120), str(game['last_run']), font = enFont, fill = 0)
             if game['winner']:
                 draw.text((firstPosition, 300), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
-                draw.chord((200, 50, 250, 100), 0, 360, fill = 0)
+                draw.chord((200, 300, 250, 100), 0, 360, fill = 0)
             if game['saver']:
                 draw.text((lastPosition, 300), 'S:' + game['saver'], font = jaFontSmall, fill = 0)
             if game['loser']:
