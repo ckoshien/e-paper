@@ -55,13 +55,13 @@ try:
     time.sleep(2)
     
     logging.info("3.read bmp file")
-    Himage = Image.open('/pic/7in5.bmp')
+    Himage = Image.open('pic/7in5.bmp')
     epd.display(epd.getbuffer(Himage))
     time.sleep(2)
     
     logging.info("4.read bmp file on window")
     Himage2 = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-    bmp = Image.open('/pic/100x100.bmp')
+    bmp = Image.open('pic/100x100.bmp')
     Himage2.paste(bmp, (50,10))
     epd.display(epd.getbuffer(Himage2))
     time.sleep(2)
