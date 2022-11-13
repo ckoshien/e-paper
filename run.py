@@ -28,7 +28,7 @@ try:
     for game in games:
         tdatetime = dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
         #if tdatetime + timedelta(minutes=15) > dt.now():
-        if tdatetime + timedelta(days=1) > dt.now():
+        if tdatetime + timedelta(days=2) > dt.now():
             print(game)
             # 255: clear the frame
             Himage = Image.new('1', (epd.width, epd.height), 255)
@@ -39,7 +39,7 @@ try:
             draw.text((640/3, 120), str(game['first_run']), font = enFont, fill = 0)
             draw.text((640*2/3, 120), str(game['last_run']), font = enFont, fill = 0)
             epd.display(epd.getbuffer(Himage))
-            time.sleep(5)    
+            time.sleep(1000)    
     
     draw.line((20, 50, 70, 100), fill = 0)
     draw.line((70, 50, 20, 100), fill = 0)
