@@ -39,7 +39,7 @@ try:
             draw.text((firstPosition, 60), game['first_team_name'], font = jaFontSmall, fill = 0)
             draw.text((lastPosition, 60), game['last_team_name'], font = jaFontSmall, fill = 0)
             draw.text((640*2/5, 120), str(game['first_run']), font = enFont, fill = 0)
-            draw.text((640/2 + 30, 120), '-', font = enFont, fill = 0)
+            draw.text((640/2 + 80, 120), '-', font = enFont, fill = 0)
             draw.text((640*4/5, 120), str(game['last_run']), font = enFont, fill = 0)
             if game['winner']:
                 draw.text((firstPosition, 300), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
