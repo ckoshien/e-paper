@@ -36,7 +36,7 @@ try:
             Himage = Image.new('1', (epd.width, epd.height), 255)
             draw = ImageDraw.Draw(Himage)
             draw.text((10, 0), game['name'], font = jaFontSmall, fill = 0)
-            draw.text((400, 0), game['updated_at'], font = jaFontSmall, fill = 0)
+            draw.text((430, 0), game['updated_at'], font = jaFontSmall, fill = 0)
             draw.text((firstPosition, 60), game['first_team_name'], font = jaFontSmall, fill = 0)
             draw.text((lastPosition, 60), game['last_team_name'], font = jaFontSmall, fill = 0)
             draw.text((640*2/6, 120), str(game['first_run']), font = enFont, fill = 0)
