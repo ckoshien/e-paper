@@ -35,8 +35,8 @@ try:
             draw.text((10, 0), game['name'], font = jaFont24, fill = 0)
             draw.text((10, 40), game['first_team_name'], font = jaFont24, fill = 0)
             draw.text((240, 40), game['last_team_name'], font = jaFont24, fill = 0)
-            draw.text((10, 40), game['first_run'], font = enFont40, fill = 0)
-            draw.text((240, 40), game['last_run'], font = enFont40, fill = 0)
+            draw.text((10, 40), str(game['first_run']), font = enFont40, fill = 0)
+            draw.text((240, 40), str(game['last_run']), font = enFont40, fill = 0)
             epd.display(epd.getbuffer(Himage))
             time.sleep(5)    
     
