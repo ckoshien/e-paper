@@ -33,8 +33,8 @@ try:
             Himage = Image.new('1', (epd.width, epd.height), 255)
             draw = ImageDraw.Draw(Himage)
             draw.text((10, 0), game['name'], font = font24, fill = 0)
-            draw.text((10, 30), game['first_team_name'],stroke_width=100, font = font24, fill = 0)
-            draw.text((150, 30), game['last_team_name'],stroke_width=100, font = font24, fill = 0)
+            draw.text((10, 30), game['first_team_name'], font = font24, fill = 0)
+            draw.text((150, 30), game['last_team_name'], font = font24, fill = 0)
             epd.display(epd.getbuffer(Himage))
             time.sleep(5)    
     
