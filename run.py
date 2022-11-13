@@ -26,7 +26,8 @@ try:
     games = json.loads(response.text)
     for game in games:
         tdatetime = dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
-        if tdatetime + timedelta(minutes=15) > dt.now():
+        #if tdatetime + timedelta(minutes=15) > dt.now():
+        if tdatetime + timedelta(days=2) > dt.now():
             print(game)
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
