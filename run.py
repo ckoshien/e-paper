@@ -19,6 +19,7 @@ try:
     epd.init()
     epd.Clear()
     
+    jaFontSmall = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
     jaFont = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 48)
     enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 100)
     api_url = 'https://jcbl-score.com/scoresheet/api/v1/game'
@@ -32,11 +33,11 @@ try:
             # 255: clear the frame
             Himage = Image.new('1', (epd.width, epd.height), 255)
             draw = ImageDraw.Draw(Himage)
-            draw.text((10, 0), game['name'], font = jaFont, fill = 0)
-            draw.text((130, 60), game['first_team_name'], font = jaFont, fill = 0)
-            draw.text((450, 60), game['last_team_name'], font = jaFont, fill = 0)
-            draw.text((200, 120), str(game['first_run']), font = enFont, fill = 0)
-            draw.text((400, 120), str(game['last_run']), font = enFont, fill = 0)
+            draw.text((10, 0), game['name'], font = jaFontSmall, fill = 0)
+            draw.text((640/5, 60), game['first_team_name'], font = jaFont, fill = 0)
+            draw.text((640*4/5, 60), game['last_team_name'], font = jaFont, fill = 0)
+            draw.text((640/3, 120), str(game['first_run']), font = enFont, fill = 0)
+            draw.text((640*2/3, 120), str(game['last_run']), font = enFont, fill = 0)
             epd.display(epd.getbuffer(Himage))
             time.sleep(5)    
     
