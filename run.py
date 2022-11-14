@@ -31,6 +31,9 @@ try:
             + timedelta(days=2) > dt.now()
             , 
         games))
+    # 画面クリア
+    Himage = Image.new('1', (epd.height, epd.width), 255)
+    draw = ImageDraw.Draw(Himage)
     for i, game in enumerate(slicedGames[0:4]):
         #tdatetime = dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
         #if tdatetime + timedelta(minutes=15) > dt.now():
@@ -39,8 +42,6 @@ try:
         # 255: clear the frame
         firstPosition = width*2/7 - (len(game['first_team_name'])/2 - 1)*24
         lastPosition = width*5/7 - (len(game['last_team_name'])/2 - 1)*24
-        Himage = Image.new('1', (epd.height, epd.width), 255)
-        draw = ImageDraw.Draw(Himage)
         draw.text((10, 0 + 200*i), game['name'], font = jaFontSmall, fill = 0)
         draw.text((width - 10*16, 0 + 200*i), game['updated_at'], font = jaFontSmall, fill = 0)
         draw.text((firstPosition, 30 + 200*i), game['first_team_name'], font = jaFontSmall, fill = 0)
@@ -58,11 +59,11 @@ try:
             draw.text((lastPosition, 175 + 200*i), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
         if game['homer']:
             draw.text((firstPosition, 200 + 200*i), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
-            
+        draw.line((0, 200 + 200*i , 448, 200 + 200*i), fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
     
-    # draw.line((20, 50, 70, 100), fill = 0)
+    
     # draw.line((70, 50, 20, 100), fill = 0)
     # draw.rectangle((20, 50, 70, 100), outline = 0)
     # draw.line((165, 50, 165, 100), fill = 0)
