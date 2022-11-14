@@ -26,12 +26,13 @@ try:
     enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 50)
     api_url = 'https://api.p2pquake.net/v2/history'
     news = []
-    for i in range(5):
+    for i in range(10):
         params = { 'limit' : 100, 'offset': i * 100}
         response = requests.get(api_url, params=params)
         tmpNews = json.loads(response.text)
         filteredNews = list(filter(
-            lambda detail: detail['code'] == 551, 
+            lambda detail: 
+                detail['code'] == 551 & detail['earthquake']['maxScale'] > 0 & detail['earthquake']['hypocenter']['name'], 
             tmpNews))
         news[len(news):len(news)] = filteredNews
     # 画面クリア
