@@ -40,9 +40,9 @@ try:
     draw = ImageDraw.Draw(Himage)
     for i, detail in enumerate(news):
         if detail['earthquake']['maxScale'] > 0 and detail['earthquake']['hypocenter']['name']:
-            draw.text((10, i*50), str(detail['earthquake']['maxScale']), font = enFont, fill = 0)
+            draw.text((10, i*50), str(int(detail['earthquake']['maxScale'] / 10)), font = enFont, fill = 0)
             draw.text((70, i*50), detail['earthquake']['hypocenter']['name'], font = jaFont, fill = 0)
-            draw.text((100, i*50), detail['earthquake']['time'], font = jaFontSmall, fill = 0)
+            draw.text((200, i*50), detail['earthquake']['time'], font = jaFontSmall, fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
     
