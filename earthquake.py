@@ -24,9 +24,12 @@ try:
     jaFontSmall = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 16)
     jaFont = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
     enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 50)
-    api_url = 'https://api.p2pquake.net/v2/history?limit=100'
-    response = requests.get(api_url)
-    news = json.loads(response.text)
+    api_url = 'https://api.p2pquake.net/v2/history?limit={}'
+    news = []
+    for i in range(3):
+        params = { 'limit' : 100, 'offset': i * 100}
+        response = requests.get(api_url, params=params)
+        news.append(json.loads(response.text))
     filteredNews = list(filter(
         lambda detail: detail['code'] == 551, 
         news))
