@@ -19,8 +19,8 @@ try:
     logging.info("init and Clear")
     epd.init()
     epd.Clear()
-    width = 448
-    unitHeight=200
+    width = 480
+    unitHeight=202
     jaFontSmall = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 16)
     jaFont = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
     enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 50)
@@ -60,7 +60,7 @@ try:
                 draw.text((lastPosition, 155 + unitHeight*i), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
             if game['homer']:
                 draw.text((firstPosition, 180 + unitHeight*i), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
-            draw.line((0, unitHeight*(i+1) , 448, unitHeight*(i+1)), fill = 0)
+            draw.line((0, unitHeight*(i+1)-2, 448, unitHeight*(i+1))-2, fill = 0)
         epd.display(epd.getbuffer(Himage))
         time.sleep(5)  
     
