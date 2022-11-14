@@ -29,10 +29,11 @@ try:
     for i in range(3):
         params = { 'limit' : 100, 'offset': i * 100}
         response = requests.get(api_url, params=params)
-        news.append(json.loads(response.text))
-    filteredNews = list(filter(
-        lambda detail: detail['code'] == 551, 
-        news))
+        tmpNews = json.loads(response.text)
+        filteredNews = list(filter(
+            lambda detail: detail['code'] == 551, 
+            tmpNews))
+        news.append(filteredNews)
     # 画面クリア
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
