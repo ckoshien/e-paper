@@ -24,7 +24,7 @@ try:
     jaFontSmall = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 16)
     jaFont = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
     enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 50)
-    api_url = 'https://api.p2pquake.net/v2/history?limit={}'
+    api_url = 'https://api.p2pquake.net/v2/history'
     news = []
     for i in range(3):
         params = { 'limit' : 100, 'offset': i * 100}
