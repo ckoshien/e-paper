@@ -26,7 +26,7 @@ try:
     response = requests.get(api_url)
     games = json.loads(response.text)
     slicedGames = games[0:4]
-    for i, game in slicedGames:
+    for i, game in enumerate(slicedGames):
         tdatetime = dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
         #if tdatetime + timedelta(minutes=15) > dt.now():
         if tdatetime + timedelta(days=2) > dt.now():
