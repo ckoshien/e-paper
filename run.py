@@ -32,7 +32,8 @@ try:
             + timedelta(days=7) > dt.now()
             , 
         games))
-    for j in range(Decimal(str(len(filteredGames)/4)).quantize(Decimal('1'),rounding=ROUND_HALF_UP)):
+    repeat_num = int(Decimal(str(len(filteredGames)/4)).quantize(Decimal('1'),rounding=ROUND_HALF_UP))
+    for j in range(repeat_num):
         # 画面クリア
         Himage = Image.new('1', (epd.height, epd.width), 255)
         draw = ImageDraw.Draw(Himage)
