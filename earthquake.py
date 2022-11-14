@@ -33,8 +33,7 @@ try:
         filteredNews = list(filter(
             lambda detail: detail['code'] == 551, 
             tmpNews))
-        news.append(filteredNews)
-    print(news)
+        news[len(news):len(news)] = filteredNews
     # 画面クリア
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
