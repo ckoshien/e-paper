@@ -25,7 +25,12 @@ try:
     api_url = 'https://jcbl-score.com/scoresheet/api/v1/game'
     response = requests.get(api_url)
     games = json.loads(response.text)
-    slicedGames = games[0:4]
+    slicedGames = list(filter(
+        lambda game: 
+            dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
+            + timedelta(days=2) > dt.now()
+            , 
+        games))
     for i, game in enumerate(slicedGames):
         tdatetime = dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
         #if tdatetime + timedelta(minutes=15) > dt.now():
