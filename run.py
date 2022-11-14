@@ -18,42 +18,44 @@ try:
     logging.info("init and Clear")
     epd.init()
     epd.Clear()
-    
-    jaFontSmall = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
-    jaFont = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 48)
-    enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 110)
+    width = 448
+    jaFontSmall = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 16)
+    jaFont = ImageFont.truetype('font/BIZUDGothic-Regular.ttf', 24)
+    enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 50)
     api_url = 'https://jcbl-score.com/scoresheet/api/v1/game'
     response = requests.get(api_url)
     games = json.loads(response.text)
-    for game in games:
+    slicedGames = games[0:4]
+    for i, game in slicedGames:
         tdatetime = dt.strptime(game['updated_at'], '%Y-%m-%d %H:%M:%S')
         #if tdatetime + timedelta(minutes=15) > dt.now():
         if tdatetime + timedelta(days=2) > dt.now():
             print(game)
             # 255: clear the frame
-            firstPosition = 640*2/6 - (len(game['first_team_name'])/2 - 1)*24
-            lastPosition = 640*5/6 - (len(game['last_team_name'])/2 - 1)*24
-            Himage = Image.new('1', (epd.width, epd.height), 255)
+            firstPosition = width*2/7 - (len(game['first_team_name'])/2 - 1)*24
+            lastPosition = width*5/7 - (len(game['last_team_name'])/2 - 1)*24
+            Himage = Image.new('1', (epd.height, epd.width), 255)
             draw = ImageDraw.Draw(Himage)
-            draw.text((10, 0), game['name'], font = jaFontSmall, fill = 0)
-            draw.text((430, 0), game['updated_at'], font = jaFontSmall, fill = 0)
-            draw.text((firstPosition, 60), game['first_team_name'], font = jaFontSmall, fill = 0)
-            draw.text((lastPosition, 60), game['last_team_name'], font = jaFontSmall, fill = 0)
-            draw.text((640*2/6, 120), str(game['first_run']), font = enFont, fill = 0)
-            draw.text((640/2 + 60, 120), '-', font = enFont, fill = 0)
-            draw.text((640*5/6, 120), str(game['last_run']), font = enFont, fill = 0)
+            draw.text((10, 0 + 200*i), game['name'], font = jaFontSmall, fill = 0)
+            draw.text((width - 10*16, 0 + 200*i), game['updated_at'], font = jaFontSmall, fill = 0)
+            draw.text((firstPosition, 30 + 200*i), game['first_team_name'], font = jaFontSmall, fill = 0)
+            draw.text((lastPosition, 30 + 200*i), game['last_team_name'], font = jaFontSmall, fill = 0)
+            draw.text((width*2/7, 60 + 200*i), str(game['first_run']), font = enFont, fill = 0)
+            draw.text((width/2 + 60, 60 + 200*i), '-', font = enFont, fill = 0)
+            draw.text((width*5/7, 60 + 200*i), str(game['last_run']), font = enFont, fill = 0)
             if game['winner']:
-                draw.text((firstPosition, 300), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
+                draw.text((firstPosition, 150 + 200*i), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
             if game['saver']:
-                draw.text((lastPosition, 300), 'S:' + game['saver'], font = jaFontSmall, fill = 0)
+                draw.text((lastPosition, 150 + 200*i), 'S:' + game['saver'], font = jaFontSmall, fill = 0)
             if game['loser']:
-                draw.text((firstPosition, 350), '敗:' + game['loser'], font = jaFontSmall, fill = 0)
+                draw.text((firstPosition, 175 + 200*i), '敗:' + game['loser'], font = jaFontSmall, fill = 0)
             if game['holder']:
-                draw.text((lastPosition, 350), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
+                draw.text((lastPosition, 175 + 200*i), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
             if game['homer']:
-                draw.text((firstPosition, 400), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
-            epd.display(epd.getbuffer(Himage))
-            time.sleep(5)  
+                draw.text((firstPosition, 200 + 200*i), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
+            
+    epd.display(epd.getbuffer(Himage))
+    time.sleep(5)  
     
     # draw.line((20, 50, 70, 100), fill = 0)
     # draw.line((70, 50, 20, 100), fill = 0)
