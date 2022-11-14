@@ -42,24 +42,24 @@ try:
             print(game)
             firstPosition = width*2/7 - (len(game['first_team_name'])/2 - 1)*24
             lastPosition = width*5/7 - (len(game['last_team_name'])/2 - 1)*24
-            draw.text((10, 0 + 200*i), game['name'], font = jaFontSmall, fill = 0)
-            draw.text((width - 10*16, 0 + 200*i), game['updated_at'], font = jaFontSmall, fill = 0)
-            draw.text((firstPosition, 30 + 200*i), game['first_team_name'], font = jaFontSmall, fill = 0)
-            draw.text((lastPosition, 30 + 200*i), game['last_team_name'], font = jaFontSmall, fill = 0)
-            draw.text((width*2/7, 60 + 200*i), str(game['first_run']), font = enFont, fill = 0)
-            draw.text((width/2 + 60, 60 + 200*i), '-', font = enFont, fill = 0)
-            draw.text((width*5/7, 60 + 200*i), str(game['last_run']), font = enFont, fill = 0)
+            draw.text((10, 0 + 220*i), game['name'], font = jaFontSmall, fill = 0)
+            draw.text((width - 10*16, 0 + 220*i), game['updated_at'], font = jaFontSmall, fill = 0)
+            draw.text((firstPosition, 30 + 220*i), game['first_team_name'], font = jaFontSmall, fill = 0)
+            draw.text((lastPosition, 30 + 220*i), game['last_team_name'], font = jaFontSmall, fill = 0)
+            draw.text((width*2/7, 60 + 220*i), str(game['first_run']), font = enFont, fill = 0)
+            draw.text((width/2 + 20, 60 + 220*i), '-', font = enFont, fill = 0)
+            draw.text((width*5/7, 60 + 220*i), str(game['last_run']), font = enFont, fill = 0)
             if game['winner']:
-                draw.text((firstPosition, 150 + 200*i), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
+                draw.text((firstPosition, 150 + 220*i), '勝:' + game['winner'], font = jaFontSmall, fill = 0)
             if game['saver']:
-                draw.text((lastPosition, 150 + 200*i), 'S:' + game['saver'], font = jaFontSmall, fill = 0)
+                draw.text((lastPosition, 150 + 220*i), 'S:' + game['saver'], font = jaFontSmall, fill = 0)
             if game['loser']:
-                draw.text((firstPosition, 175 + 200*i), '敗:' + game['loser'], font = jaFontSmall, fill = 0)
+                draw.text((firstPosition, 175 + 220*i), '敗:' + game['loser'], font = jaFontSmall, fill = 0)
             if game['holder']:
-                draw.text((lastPosition, 175 + 200*i), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
+                draw.text((lastPosition, 175 + 220*i), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
             if game['homer']:
-                draw.text((firstPosition, 200 + 200*i), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
-            draw.line((0, 210 + 200*i , 448, 210 + 200*i), fill = 0)
+                draw.text((firstPosition, 200 + 220*i), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
+            draw.line((0, 210 + 200*i , 448, 220 + 220*i), fill = 0)
         epd.display(epd.getbuffer(Himage))
         time.sleep(5)  
     
