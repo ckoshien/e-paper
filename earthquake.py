@@ -32,7 +32,9 @@ try:
         tmpNews = json.loads(response.text)
         filteredNews = list(filter(
             lambda detail: 
-                detail['code'] == 551 & detail['earthquake']['maxScale'] > 0 & detail['earthquake']['hypocenter']['name'], 
+                detail['code'] == 551 
+                & (detail['earthquake'] & detail['earthquake']['maxScale'] > 0) 
+                & (detail['earthquake'] & detail['earthquake']['hypocenter']['name']), 
             tmpNews))
         news[len(news):len(news)] = filteredNews
     # 画面クリア
