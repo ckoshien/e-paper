@@ -60,7 +60,7 @@ try:
                 draw.text((lastPosition, 155 + unitHeight*i), 'H:' + game['holder'], font = jaFontSmall, fill = 0)
             if game['homer']:
                 draw.text((firstPosition, 180 + unitHeight*i), 'HR:' + game['homer'], font = jaFontSmall, fill = 0)
-            draw.line((0, unitHeight*(i+1)-2, 448, unitHeight*(i+1))-2, fill = 0)
+            draw.line((0, -2 + unitHeight*(i+1), 448, -2 + unitHeight*(i+1)), fill = 0)
         epd.display(epd.getbuffer(Himage))
         time.sleep(5)  
     
