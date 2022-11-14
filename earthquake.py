@@ -34,7 +34,7 @@ try:
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
     for i, detail in enumerate(filteredNews):
-        draw.text((10, i*50), detail['earthquake']['maxScale'], font = enFont, fill = 0)
+        draw.text((10, i*50), str(detail['earthquake']['maxScale']), font = enFont, fill = 0)
         draw.text((70, i*50), detail['earthquake']['name'], font = jaFont, fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
