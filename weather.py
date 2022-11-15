@@ -32,7 +32,7 @@ try:
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
     for i in range(24):
-        draw.text((0, i*30), i, font = jaFontSmall, fill = 0)
+        draw.text((0, i*30), str(i), font = jaFontSmall, fill = 0)
         draw.text((30, i*30), str(data['hourly']['temperature_2m'][i+24]), font = jaFontSmall, fill = 0)
         draw.text((150, i*30), str(data['hourly']['temperature_2m'][i+48]), font = jaFontSmall, fill = 0)
     epd.display(epd.getbuffer(Himage))
