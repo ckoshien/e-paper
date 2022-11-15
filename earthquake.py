@@ -32,17 +32,18 @@ try:
         tmpNews = json.loads(response.text)
         filteredNews = list(filter(
             lambda detail: 
-                detail['code'] == 551, 
+                detail['code'] == 551 
+                and (detail['earthquake'] and detail['earthquake']['maxScale'] > 0) 
+                and (detail['earthquake'] and detail['earthquake']['hypocenter']['name']), 
             tmpNews))
         news[len(news):len(news)] = filteredNews
     # 画面クリア
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
     for i, detail in enumerate(news):
-        if detail['earthquake']['maxScale'] > 0 and detail['earthquake']['hypocenter']['name']:
-            draw.text((10, i*50), str(int(detail['earthquake']['maxScale'] / 10)), font = enFont, fill = 0)
-            draw.text((70, i*50), detail['earthquake']['hypocenter']['name'], font = jaFont, fill = 0)
-            draw.text((200, i*50), detail['earthquake']['time'], font = jaFontSmall, fill = 0)
+        draw.text((10, i*50), str(int(detail['earthquake']['maxScale'] / 10)), font = enFont, fill = 0)
+        draw.text((70, i*50), detail['earthquake']['hypocenter']['name'], font = jaFont, fill = 0)
+        draw.text((200, i*50), detail['earthquake']['time'], font = jaFontSmall, fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
     
