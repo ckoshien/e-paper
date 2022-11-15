@@ -40,10 +40,10 @@ try:
         draw.line((0, i*60, 480, i*60), fill = 0)
         try:
             icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.png')
-            icon = icon.resize((20,20))
+            icon = icon.resize((40,40))
             Himage.paste(icon, (30,i*60))
             icon2 = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+48]) +'.png')
-            icon2 = icon2.resize((20,20))
+            icon2 = icon2.resize((40,40))
             Himage.paste(icon2, (260,i*60))
         except:
             continue
