@@ -40,6 +40,7 @@ try:
         draw.line((0, i*60, 480, i*60), fill = 0)
         if data['hourly']['weathercode'][i*2+24] != 2 and data['hourly']['weathercode'][i*2+24] != 3:
             icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.png')
+            icon.resize((40,40))
             Himage.paste(icon, (30,i*60))
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
