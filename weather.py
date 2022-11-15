@@ -50,9 +50,9 @@ try:
         draw.text((300, 0), u'明日の天気', font = jaFont, fill = 0)
         draw.text((10, 60 + i*60), str(i*2), font = jaFont, fill = 0)
         draw.text((80, 60 + i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+24]), font = jaFont, fill = 0)
-        draw.text((190, 60 + i*60), str(data['hourly']['temperature_2m'][i*2+24]), font = jaFont, fill = 0)
+        draw.text((190, 60 + i*60), str(data['hourly']['temperature_2m'][i*2+24]) + u'℃', font = jaFont, fill = 0)
         draw.text((300, 60 + i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+48]), font = jaFont, fill = 0)
-        draw.text((410, 60 + i*60), str(data['hourly']['temperature_2m'][i*2+48]), font = jaFont, fill = 0)
+        draw.text((410, 60 + i*60), str(data['hourly']['temperature_2m'][i*2+48])+ u'℃', font = jaFont, fill = 0)
         draw.line((0, 60 + i*60, 480, 60 + i*60), fill = 0)
         try:
             icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.jpeg')
