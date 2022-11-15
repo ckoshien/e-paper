@@ -57,7 +57,7 @@ try:
         try:
             icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.jpeg')
             icon = icon.resize((40,40))
-            Himage.paste(icon, (31,1 + 60 + i*60))
+            Himage.paste(icon, (35,1 + 60 + i*60))
             icon2 = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+48]) +'.jpeg')
             icon2 = icon2.resize((40,40))
             Himage.paste(icon2, (251,1 + 60 + i*60))
