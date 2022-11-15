@@ -38,7 +38,7 @@ try:
         draw.text((30, i*60), str(data['hourly']['temperature_2m'][i*2+24]), font = jaFontSmall, fill = 0)
         draw.text((260, i*60), str(data['hourly']['temperature_2m'][i*2+48]), font = jaFontSmall, fill = 0)
         draw.line((0, i*60, 480, i*60), fill = 0)
-        icon = Image.open('pic/' + data['hourly']['weathercode'][i*2+24] +'.png')
+        icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.png')
         Himage.paste(icon, (30,i*60))
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
