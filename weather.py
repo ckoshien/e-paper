@@ -15,14 +15,13 @@ logging.basicConfig(level=logging.DEBUG)
 def convertWeatherCode(code: int):
     if code == 0:
         return '晴れ'
-    if code == 1 or code == 2:
-        return ''
     if code == 3:
         return '曇り'
     if code == 61:
         return '雨'
     if code == 80:
         return 'にわか雨'
+    return ''
 
 try:
     logging.info("epd7in5 Demo")
