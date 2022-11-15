@@ -32,11 +32,11 @@ try:
     # 画面クリア
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
-    draw.line((225, 0, 225, 800), fill = 0)
+    draw.line((250, 0, 250, 800), fill = 0)
     for i in range(24):
-        draw.text((0, i*30), str(i), font = jaFont, fill = 0)
+        draw.text((10, i*30), str(i), font = jaFont, fill = 0)
         draw.text((30, i*30), str(data['hourly']['temperature_2m'][i+24]), font = jaFontSmall, fill = 0)
-        draw.text((150, i*30), str(data['hourly']['temperature_2m'][i+48]), font = jaFontSmall, fill = 0)
+        draw.text((260, i*30), str(data['hourly']['temperature_2m'][i+48]), font = jaFontSmall, fill = 0)
         draw.line((0, i*30, 480, i*30), fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
