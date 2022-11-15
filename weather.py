@@ -42,6 +42,9 @@ try:
             icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.png')
             icon.resize((40,40))
             Himage.paste(icon, (30,i*60))
+            icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+48]) +'.png')
+            icon.resize((40,40))
+            Himage.paste(icon, (260,i*60))
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
     
