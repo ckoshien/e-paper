@@ -46,19 +46,19 @@ try:
     draw = ImageDraw.Draw(Himage)
     draw.line((250, 0, 250, 800), fill = 0)
     for i in range(12):
-        draw.text((10, i*60), str(i), font = jaFont, fill = 0)
-        draw.text((80, i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+24]), font = jaFont, fill = 0)
-        draw.text((180, i*60), str(data['hourly']['temperature_2m'][i*2+24]), font = jaFontSmall, fill = 0)
-        draw.text((300, i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+48]), font = jaFont, fill = 0)
-        draw.text((400, i*60), str(data['hourly']['temperature_2m'][i*2+48]), font = jaFontSmall, fill = 0)
-        draw.line((0, i*60, 480, i*60), fill = 0)
+        draw.text((10, 60 + i*60), str(i), font = jaFont, fill = 0)
+        draw.text((80, 60 + i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+24]), font = jaFont, fill = 0)
+        draw.text((180, 60 + i*60), str(data['hourly']['temperature_2m'][i*2+24]), font = jaFontSmall, fill = 0)
+        draw.text((300, 60 + i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+48]), font = jaFont, fill = 0)
+        draw.text((400, 60 + i*60), str(data['hourly']['temperature_2m'][i*2+48]), font = jaFontSmall, fill = 0)
+        draw.line((0, 60 + i*60, 480, 60 + i*60), fill = 0)
         try:
             icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.jpeg')
             icon = icon.resize((40,40))
-            Himage.paste(icon, (31,1 + i*60))
+            Himage.paste(icon, (31,1 + 60 + i*60))
             icon2 = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+48]) +'.jpeg')
             icon2 = icon2.resize((40,40))
-            Himage.paste(icon2, (251,1 + i*60))
+            Himage.paste(icon2, (251,1 + 60 + i*60))
         except:
             continue
     epd.display(epd.getbuffer(Himage))
