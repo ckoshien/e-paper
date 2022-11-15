@@ -31,7 +31,7 @@ try:
     # 画面クリア
     Himage = Image.new('1', (epd.height, epd.width), 255)
     draw = ImageDraw.Draw(Himage)
-    for i, detail in enumerate(data['hourly']):
+    for i in range(24):
         draw.text((0, i*30), data['hourly']['time'][i+24], font = jaFontSmall, fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
