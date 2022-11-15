@@ -26,7 +26,7 @@ try:
     enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 50)
     api_url = 'https://api.p2pquake.net/v2/history'
     news = []
-    for i in range(10):
+    for i in range(3):
         params = { 'limit' : 100, 'offset': i * 100}
         response = requests.get(api_url, params=params)
         tmpNews = json.loads(response.text)
@@ -43,7 +43,7 @@ try:
     for i, detail in enumerate(news):
         draw.text((10, i*50), str(int(detail['earthquake']['maxScale'] / 10)), font = enFont, fill = 0)
         draw.text((70, i*50), detail['earthquake']['hypocenter']['name'], font = jaFont, fill = 0)
-        draw.text((200, i*50), detail['earthquake']['time'], font = jaFontSmall, fill = 0)
+        draw.text((70, 30 + i*50), detail['earthquake']['time'], font = jaFontSmall, fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
     
