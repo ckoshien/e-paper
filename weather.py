@@ -12,6 +12,18 @@ from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
 
 logging.basicConfig(level=logging.DEBUG)
 
+def convertWeatherCode(code: int):
+    if code == 0:
+        return '晴れ'
+    if code == 1 or code == 2:
+        return '変化なし'
+    if code == 3:
+        return '曇り'
+    if code == 61:
+        return '雨'
+    if code == 80:
+        return 'にわか雨'
+
 try:
     logging.info("epd7in5 Demo")
     
@@ -35,7 +47,8 @@ try:
     draw.line((250, 0, 250, 800), fill = 0)
     for i in range(12):
         draw.text((10, i*60), str(i), font = jaFont, fill = 0)
-        draw.text((80, i*60), str(data['hourly']['temperature_2m'][i*2+24]), font = jaFont, fill = 0)
+        draw.text((80, i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+24]), font = jaFont, fill = 0)
+        draw.text((180, i*60), str(data['hourly']['temperature_2m'][i*2+24]), font = jaFont, fill = 0)
         draw.text((300, i*60), str(data['hourly']['temperature_2m'][i*2+48]), font = jaFont, fill = 0)
         draw.line((0, i*60, 480, i*60), fill = 0)
         try:
@@ -44,7 +57,7 @@ try:
             Himage.paste(icon, (31,i*60))
             icon2 = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+48]) +'.jpeg')
             icon2 = icon2.resize((40,40))
-            Himage.paste(icon2, (261,i*60))
+            Himage.paste(icon2, (251,i*60))
         except:
             continue
     epd.display(epd.getbuffer(Himage))
