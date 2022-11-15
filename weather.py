@@ -36,7 +36,7 @@ try:
         draw.text((0, i*30), str(i), font = jaFontSmall, fill = 0)
         draw.text((30, i*30), str(data['hourly']['temperature_2m'][i+24]), font = jaFontSmall, fill = 0)
         draw.text((150, i*30), str(data['hourly']['temperature_2m'][i+48]), font = jaFontSmall, fill = 0)
-        draw.line((0, i*33, 480, i*33), fill = 0)
+        draw.line((0, i*30, 480, i*30), fill = 0)
     epd.display(epd.getbuffer(Himage))
     time.sleep(5)  
     
