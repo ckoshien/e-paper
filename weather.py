@@ -46,7 +46,9 @@ try:
     draw = ImageDraw.Draw(Himage)
     draw.line((250, 0, 250, 800), fill = 0)
     for i in range(12):
-        draw.text((10, 60 + i*60), str(i), font = jaFont, fill = 0)
+        draw.text((80, 0), u'今日の天気', font = jaFont, fill = 0)
+        draw.text((300, 0), u'明日の天気', font = jaFont, fill = 0)
+        draw.text((10, 60 + i*60), str(i*2), font = jaFont, fill = 0)
         draw.text((80, 60 + i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+24]), font = jaFont, fill = 0)
         draw.text((180, 60 + i*60), str(data['hourly']['temperature_2m'][i*2+24]), font = jaFontSmall, fill = 0)
         draw.text((300, 60 + i*60), convertWeatherCode(data['hourly']['weathercode'][i*2+48]), font = jaFont, fill = 0)
