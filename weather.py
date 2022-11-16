@@ -13,6 +13,7 @@ from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
 logging.basicConfig(level=logging.DEBUG)
 
 def convertWeatherCode(code: int):
+    print(code)
     if code == 0:
         return '晴れ'
     if code == 3:
