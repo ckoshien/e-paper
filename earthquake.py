@@ -26,7 +26,7 @@ try:
     enFont = ImageFont.truetype('font/BebasNeue-Regular.ttf', 50)
     api_url = 'https://api.p2pquake.net/v2/history'
     news = []
-    for i in range(5):
+    for i in range(3):
         params = { 'limit' : 100, 'offset': i * 100}
         response = requests.get(api_url, params=params)
         tmpNews = json.loads(response.text)
@@ -85,12 +85,12 @@ try:
     # epd.display(epd.getbuffer(Himage2))
     # time.sleep(2)
 
-    logging.info("Clear...")
-    epd.init()
-    epd.Clear()
+    # logging.info("Clear...")
+    # epd.init()
+    # epd.Clear()
     
-    logging.info("Goto Sleep...")
-    epd.sleep()
+    # logging.info("Goto Sleep...")
+    # epd.sleep()
     
 except IOError as e:
     logging.info(e)

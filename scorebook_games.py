@@ -102,12 +102,12 @@ try:
     # epd.display(epd.getbuffer(Himage2))
     # time.sleep(2)
 
-    logging.info("Clear...")
-    epd.init()
-    epd.Clear()
+    # logging.info("Clear...")
+    # epd.init()
+    # epd.Clear()
     
-    logging.info("Goto Sleep...")
-    epd.sleep()
+    # logging.info("Goto Sleep...")
+    # epd.sleep()
     
 except IOError as e:
     logging.info(e)
