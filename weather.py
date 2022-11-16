@@ -21,7 +21,7 @@ def convertWeatherCode(code: int):
         return '雨'
     if code == 80:
         return 'にわか雨'
-    return ''
+    return str(code)
 
 try:
     logging.info("epd7in5 Demo")
