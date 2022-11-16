@@ -18,6 +18,8 @@ def convertWeatherCode(code: int):
         return '晴れ'
     if code == 3:
         return '曇り'
+    if code == 45:
+        return '霧'
     if code == 61:
         return '雨'
     if code == 80:
@@ -57,10 +59,10 @@ try:
         try:
             icon = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+24]) +'.jpeg')
             icon = icon.resize((40,40))
-            Himage.paste(icon, (35,1 + 60 + i*60))
+            Himage.paste(icon, (35,5 + 60 + i*60))
             icon2 = Image.open('pic/' + str(data['hourly']['weathercode'][i*2+48]) +'.jpeg')
             icon2 = icon2.resize((40,40))
-            Himage.paste(icon2, (251,1 + 60 + i*60))
+            Himage.paste(icon2, (251,5 + 60 + i*60))
         except:
             continue
     epd.display(epd.getbuffer(Himage))
