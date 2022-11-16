@@ -1,3 +1,3 @@
-python scorebook_games.python
+python scorebook_games.py
 python earthquake.py
 python weather.py
